@@ -1,14 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ITodoItem } from '../../Sdk/models';
+import { ITodoItem, TodoStatus } from '../../Sdk/models';
 import { addTodoAsync, initialFetchAsync, removeTodoAsync, updateTodoAsync } from './thunks';
 import { IUpdateItemPayload } from './todoListApi';
 
 export interface TodoListState {
+    filter: TodoStatus,
     items: ITodoItem[];
     status: 'idle' | 'loading' | 'failed';
 }
 
 const initialState: TodoListState = {
+    filter: TodoStatus.All,
     items: [],
     status: 'idle',
 };
@@ -17,6 +19,9 @@ export const todoListSlice = createSlice({
     name: 'todoList',
     initialState,
     reducers: {
+        setFilter: (state, action: PayloadAction<TodoStatus>) => {
+            state.filter = action.payload;
+        },
         addItem: (state, action: PayloadAction<ITodoItem>) => {
             const newItem = action.payload;
             state.items.push(newItem);
@@ -67,6 +72,6 @@ export const todoListSlice = createSlice({
     },
 });
 
-export const { addItem, removeItem, updateItem } = todoListSlice.actions;
+export const { setFilter, addItem, removeItem, updateItem } = todoListSlice.actions;
 
 export default todoListSlice.reducer;

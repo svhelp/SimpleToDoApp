@@ -1,8 +1,8 @@
 import { useCallback, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../App/hooks";
-import { TodoListItem } from "../TodoListItem/TodoListItem";
-import { selectTodoItems } from "./selector";
-import { addTodoAsync } from "./thunks";
+import { useAppDispatch, useAppSelector } from "../../../App/hooks";
+import { TodoListItem } from "./TodoListItem";
+import { selectTodoItems } from "../selector";
+import { addTodoAsync } from "../thunks";
 
 
 export function TodoList(){

@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
-import { useAppDispatch } from "../../App/hooks";
-import { ITodoItem } from "../../Sdk/models";
-import { removeTodoAsync, updateTodoAsync } from "../TodoList/thunks";
+import { useAppDispatch } from "../../../App/hooks";
+import { ITodoItem } from "../../../Sdk/models";
+import { removeTodoAsync, updateTodoAsync } from "../thunks";
 
 interface IProps {
     item: ITodoItem;

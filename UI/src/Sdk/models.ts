@@ -9,3 +9,9 @@ export interface ICommandResult<T> {
     isSucessful: boolean;
     data?: T | undefined,
 }
+
+export enum TodoStatus {
+    All,
+    Active,
+    Completed,
+}
