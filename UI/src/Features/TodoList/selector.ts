@@ -12,4 +12,6 @@ export const selectTodoItems = (state: RootState) => {
     }
 } 
 
+export const selectFilterType = (state: RootState) => state.todoList.filter;
+
 export const selectStatus = (state: RootState) => state.todoList.status;

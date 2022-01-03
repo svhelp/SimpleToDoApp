@@ -1,3 +1,5 @@
+import { Checkbox, TextField } from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useCallback, useState } from "react";
 import { useAppDispatch } from "../../../App/hooks";
 import { ITodoItem } from "../../../Sdk/models";
@@ -11,7 +13,6 @@ export function TodoListItem(props: IProps) {
     const dispatch = useAppDispatch();
     const { item } = props;
 
-    const [isEditMode, setIsEditMode] = useState(false);
     const [updatedText, setUpdatedText] = useState(item.text);
 
     const updateCompleted = useCallback((isCompleted: boolean) => {
@@ -19,6 +20,11 @@ export function TodoListItem(props: IProps) {
     }, []);
     
     const updateText = useCallback(() => {
+        if (!updatedText){
+            setUpdatedText(item.text);
+            return;
+        }
+
         dispatch(updateTodoAsync({ targetId: item.id, updater: { text: updatedText } }));
     }, [ updatedText ]);
 
@@ -27,12 +33,12 @@ export function TodoListItem(props: IProps) {
     }, []);
 
     return (
-        <div>
-            <input type="checkbox" checked={item.isCompleted} onChange={e => updateCompleted(e.target.checked)}/>
+        <div className="row">
+            <Checkbox size="small" checked={item.isCompleted} onChange={e => updateCompleted(e.target.checked)}/>
             <div title={item.createdAt}>
-                <input value={updatedText} onChange={e => setUpdatedText(e.target.value)} onBlur={updateText}/>
+                <TextField variant="standard" value={updatedText} onChange={e => setUpdatedText(e.target.value)} onBlur={updateText}/>
             </div>
-            <button onClick={removeTodo}/>
+            <DeleteIcon onClick={removeTodo} />
         </div>
     );
 }
