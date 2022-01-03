@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import './App.css';
 import { useAppDispatch } from './App/hooks';
 import { initialFetchAsync } from './Features/TodoList/thunks';
 import { TodoList } from './Features/TodoList/Components/TodoList';
