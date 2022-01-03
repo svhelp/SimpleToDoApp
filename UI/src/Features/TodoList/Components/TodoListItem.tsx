@@ -25,6 +25,10 @@ export function TodoListItem(props: IProps) {
             return;
         }
 
+        if (updatedText === item.text) {
+            return;
+        }    
+
         dispatch(updateTodoAsync({ targetId: item.id, updater: { text: updatedText } }));
     }, [ updatedText, item.id, item.text, dispatch ]);
 
