@@ -6,6 +6,7 @@ export interface IUpdateItemPayload{
 }
 
 const storageKey = "todoListCachedData";
+const maxServerDelay = 500;
 
 // A mock function to mimic making an async request for data
 export function fetchTodoList() {
@@ -14,7 +15,7 @@ export function fetchTodoList() {
         const storedData = localStorage.getItem(storageKey);
         const todos: ITodoItem[] = !! storedData ? JSON.parse(storedData) : [];
 
-        resolve({ data: todos });
+        setTimeout(() => resolve({ data: todos }), getDelay());
     });
 }
 
@@ -35,7 +36,7 @@ export function addTodo(newItemText: string) {
 
         localStorage.setItem(storageKey, JSON.stringify(todos));
 
-        resolve({ isSucessful: true, data: newItem });
+        setTimeout(() => resolve({ isSucessful: true, data: newItem }), getDelay());
     });
 }
 
@@ -57,7 +58,7 @@ export function updateTodo(payload: IUpdateItemPayload) {
 
         localStorage.setItem(storageKey, JSON.stringify(todos));
 
-        resolve({ isSucessful: true });
+        setTimeout(() => resolve({ isSucessful: true }), getDelay());
     });
 }
 
@@ -71,6 +72,10 @@ export function removeTodo(id: number) {
 
         localStorage.setItem(storageKey, JSON.stringify(todos));
 
-        resolve({ isSucessful: true });
+        setTimeout(() => resolve({ isSucessful: true }), getDelay());
     });
+}
+
+function getDelay() {
+    return Math.floor(Math.random() * maxServerDelay);
 }

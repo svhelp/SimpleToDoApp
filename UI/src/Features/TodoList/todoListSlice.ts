@@ -1,6 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ITodoItem, TodoStatus } from '../../Sdk/models';
-import { addTodoAsync, initialFetchAsync, removeTodoAsync, updateTodoAsync } from './thunks';
+import { initialFetchAsync } from './thunks';
 import { IUpdateItemPayload } from './todoListApi';
 
 export interface TodoListState {
@@ -14,6 +14,10 @@ const initialState: TodoListState = {
     items: [],
     status: 'idle',
 };
+
+type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>
+type PendingAction = ReturnType<GenericAsyncThunk['pending']>
+type FulfilledAction = ReturnType<GenericAsyncThunk['fulfilled']>
 
 export const todoListSlice = createSlice({
     name: 'todoList',
@@ -44,31 +48,21 @@ export const todoListSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-        .addCase(initialFetchAsync.pending, (state) => {
-            state.status = 'loading';
-        })
-        .addCase(addTodoAsync.pending, (state) => {
-            state.status = 'loading';
-        })
-        .addCase(updateTodoAsync.pending, (state) => {
-            state.status = 'loading';
-        })
-        .addCase(removeTodoAsync.pending, (state) => {
-            state.status = 'loading';
-        })
         .addCase(initialFetchAsync.fulfilled, (state, action) => {
-            state.status = 'idle';
             state.items = action.payload;
         })
-        .addCase(addTodoAsync.fulfilled, (state) => {
-            state.status = 'idle';
-        })
-        .addCase(updateTodoAsync.fulfilled, (state) => {
-            state.status = 'idle';
-        })
-        .addCase(removeTodoAsync.fulfilled, (state) => {
-            state.status = 'idle';
-        });
+        .addMatcher<PendingAction>(
+            (action) => action.type.endsWith('/pending'),
+            (state) => {
+                state.status = 'loading';
+            }
+        )
+        .addMatcher<FulfilledAction>(
+            (action) => action.type.endsWith('/fulfilled'),
+            (state) => {
+                state.status = 'idle';
+            }
+        );
     },
 });
 

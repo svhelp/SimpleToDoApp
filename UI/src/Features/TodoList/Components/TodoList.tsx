@@ -1,9 +1,9 @@
 import { useCallback, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../App/hooks";
 import { TodoListItem } from "./TodoListItem";
-import { selectTodoItems } from "../selector";
+import { selectStatus, selectTodoItems } from "../selector";
 import { addTodoAsync } from "../thunks";
-import { TextField } from "@mui/material";
+import { CircularProgress, TextField } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import styled from "styled-components";
 
@@ -32,7 +32,18 @@ const List = styled.div`
     }
 `
 
+const LoadingContainer = styled.div`
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: calc(100% - 200px);
+    text-align: center;
+    padding-top: 200px;
+    background: rgba(255, 255, 255, 0.75);
+`;
+
 export function TodoList(){
+    const status = useAppSelector(selectStatus);
     const items = useAppSelector(selectTodoItems);
     const dispatch = useAppDispatch();
     const [ newItemText, setNewItemText ] = useState("");
@@ -43,12 +54,20 @@ export function TodoList(){
     }, [ newItemText, dispatch ]);
 
     return (
-        <List id="todo-list">
-            <div className="row">
-                <TextField variant="standard" label="Enter todo text" value={newItemText} onChange={e => setNewItemText(e.target.value)}/>
-                <AddIcon onClick={addTodo} />
-            </div>
-            {items.map(i => <TodoListItem key={i.id} item={i}/>)}
-        </List>
+        <div>
+            <List id="todo-list">
+                <div className="row">
+                    <TextField variant="standard" label="Enter todo text" value={newItemText} onChange={e => setNewItemText(e.target.value)}/>
+                    <AddIcon onClick={addTodo} />
+                </div>
+                {items.map(i => <TodoListItem key={i.id} item={i}/>)}
+
+            {status === "loading" &&
+                <LoadingContainer>
+                    <CircularProgress />
+                </LoadingContainer>}
+            </List>
+
+        </div>        
     );
 }
