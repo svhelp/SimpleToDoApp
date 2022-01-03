@@ -10,7 +10,7 @@ function App() {
 
   useEffect(() => {
       dispatch(initialFetchAsync());
-  }, []);
+  }, [ dispatch ]);
 
   return (
     <div className="app">

@@ -12,7 +12,7 @@ export function TodosFilterSelector(){
 
     const changeFilterType = useCallback((filterType: TodoStatus) => {
         dispatch(setFilter(filterType));
-    }, []);
+    }, [ dispatch ]);
 
     return (
         <Tabs value={currentFilter} onChange={(e, newValue) => changeFilterType(newValue)} centered>

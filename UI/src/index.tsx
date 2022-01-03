@@ -5,7 +5,6 @@ import App from './App';
 import { store } from './App/store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
-import { initialFetchAsync } from './Features/TodoList/thunks';
 
 ReactDOM.render(
   <React.StrictMode>

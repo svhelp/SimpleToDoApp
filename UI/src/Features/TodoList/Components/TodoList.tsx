@@ -40,7 +40,7 @@ export function TodoList(){
     const addTodo = useCallback(() => {
         dispatch(addTodoAsync(newItemText));
         setNewItemText("");
-    }, [ newItemText ]);
+    }, [ newItemText, dispatch ]);
 
     return (
         <List id="todo-list">

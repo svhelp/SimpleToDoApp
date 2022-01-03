@@ -17,7 +17,7 @@ export function TodoListItem(props: IProps) {
 
     const updateCompleted = useCallback((isCompleted: boolean) => {
         dispatch(updateTodoAsync({ targetId: item.id, updater: { isCompleted } }));
-    }, []);
+    }, [ item.id, dispatch ]);
     
     const updateText = useCallback(() => {
         if (!updatedText){
@@ -26,11 +26,11 @@ export function TodoListItem(props: IProps) {
         }
 
         dispatch(updateTodoAsync({ targetId: item.id, updater: { text: updatedText } }));
-    }, [ updatedText ]);
+    }, [ updatedText, item.id, item.text, dispatch ]);
 
     const removeTodo = useCallback(() => { 
         dispatch(removeTodoAsync(item.id));
-    }, []);
+    }, [ item.id, dispatch ]);
 
     return (
         <div className="row">
