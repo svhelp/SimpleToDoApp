@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useAppDispatch } from './App/hooks';
 import { initialFetchAsync } from './Features/TodoList/thunks';
-import { TodoList } from './Features/TodoList/Components/TodoList';
 import { TodosFilterSelector } from './Features/TodoList/Components/TodosFilterSelector';
+import { TodoListContainer } from './Features/TodoList/Components/TodoListContainer';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -14,7 +14,7 @@ function App() {
   return (
     <div className="app">
       <TodosFilterSelector />
-      <TodoList />
+      <TodoListContainer />
     </div>
   );
 }

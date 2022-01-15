@@ -21,7 +21,7 @@ export const addTodoAsync = createAsyncThunk(
     
         const addResult = await api.addTodo(newItemText);
     
-        if (!addResult.isSucessful || !addResult.data){
+        if (!addResult.isSuсcessful || !addResult.data){
             return;
         }
     
@@ -36,7 +36,7 @@ export const updateTodoAsync = createAsyncThunk(
     async (payload: IUpdateItemPayload, thunkApi) => {
         const response = await api.updateTodo(payload);
     
-        if (!response.isSucessful){
+        if (!response.isSuсcessful){
             return;
         }
         
@@ -51,7 +51,7 @@ export const removeTodoAsync = createAsyncThunk(
     async (id: number, thunkApi) => {
         const response = await api.removeTodo(id);
     
-        if (!response.isSucessful){
+        if (!response.isSuсcessful){
             return;
         }
     

@@ -28,22 +28,19 @@ export const todoListSlice = createSlice({
         },
         addItem: (state, action: PayloadAction<ITodoItem>) => {
             const newItem = action.payload;
-            state.items.push(newItem);
+            state.items.unshift(newItem);
         },
         removeItem: (state, action: PayloadAction<number>) => {
             state.items = state.items.filter(i => i.id !== action.payload);
         },
         updateItem: (state, action: PayloadAction<IUpdateItemPayload>) => {
-            const targetItem = state.items.find(i => i.id === action.payload.targetId);
+            const targetItemIndex = state.items.findIndex(i => i.id === action.payload.targetId);
 
-            if (!targetItem){
+            if (targetItemIndex === -1){
                 return;
             }
 
-            const updatedItem = {...targetItem, ...action.payload.updater};
-
-            state.items = state.items.filter(i => i.id !== action.payload.targetId);
-            state.items.push(updatedItem);
+            state.items[targetItemIndex] = {...state.items[targetItemIndex], ...action.payload.updater};
         },
     },
     extraReducers: (builder) => {

@@ -15,10 +15,14 @@ export function TodoListItem(props: IProps) {
 
     const [updatedText, setUpdatedText] = useState(item.text);
 
-    const updateCompleted = useCallback((isCompleted: boolean) => {
-        dispatch(updateTodoAsync({ targetId: item.id, updater: { isCompleted } }));
+    const updateCompleted = useCallback(({ target: { checked }}: React.ChangeEvent<HTMLInputElement>) => {
+        dispatch(updateTodoAsync({ targetId: item.id, updater: { isCompleted: checked } }));
     }, [ item.id, dispatch ]);
     
+    const onChangeUpdated = useCallback(({ target: { value }}: React.ChangeEvent<HTMLInputElement>) => { 
+        setUpdatedText(value);
+    }, [])
+
     const updateText = useCallback(() => {
         if (!updatedText){
             setUpdatedText(item.text);
@@ -38,9 +42,9 @@ export function TodoListItem(props: IProps) {
 
     return (
         <div className="row">
-            <Checkbox size="small" checked={item.isCompleted} onChange={e => updateCompleted(e.target.checked)}/>
+            <Checkbox size="small" checked={item.isCompleted} onChange={updateCompleted}/>
             <div title={item.createdAt}>
-                <TextField variant="standard" value={updatedText} onChange={e => setUpdatedText(e.target.value)} onBlur={updateText}/>
+                <TextField variant="standard" value={updatedText} onChange={onChangeUpdated} onBlur={updateText}/>
             </div>
             <DeleteIcon onClick={removeTodo} />
         </div>

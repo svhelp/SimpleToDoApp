@@ -32,11 +32,11 @@ export function addTodo(newItemText: string) {
         const storedData = localStorage.getItem(storageKey);    
 
         const todos: ITodoItem[] = !! storedData ? JSON.parse(storedData) : [];
-        todos.push(newItem);
+        todos.unshift(newItem);
 
         localStorage.setItem(storageKey, JSON.stringify(todos));
 
-        setTimeout(() => resolve({ isSucessful: true, data: newItem }), getDelay());
+        setTimeout(() => resolve({ isSuсcessful: true, data: newItem }), getDelay());
     });
 }
 
@@ -58,7 +58,7 @@ export function updateTodo(payload: IUpdateItemPayload) {
 
         localStorage.setItem(storageKey, JSON.stringify(todos));
 
-        setTimeout(() => resolve({ isSucessful: true }), getDelay());
+        setTimeout(() => resolve({ isSuсcessful: true }), getDelay());
     });
 }
 
@@ -72,7 +72,7 @@ export function removeTodo(id: number) {
 
         localStorage.setItem(storageKey, JSON.stringify(todos));
 
-        setTimeout(() => resolve({ isSucessful: true }), getDelay());
+        setTimeout(() => resolve({ isSuсcessful: true }), getDelay());
     });
 }
 

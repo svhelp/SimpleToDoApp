@@ -6,7 +6,7 @@ export interface ITodoItem {
 }
 
 export interface ICommandResult<T> {
-    isSucessful: boolean;
+    isSuсcessful: boolean;
     data?: T | undefined,
 }
 
